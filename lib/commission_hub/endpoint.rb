@@ -1,7 +1,7 @@
 module CommissionHub
   class Endpoint
       
-    attr_accessor :name, :connection, :uri
+    attr_accessor :name, :connection, :full_uri
     attr_writer   :mapper
 
     def initialize(uri) 
@@ -9,7 +9,11 @@ module CommissionHub
     end
 
     def extend_uri(ext_uri=nil)
-      @uri = "#{connection.settings.base_uri.chomp("/")}/#{@uri}/#{ext_uri&.gsub("//","/")}".chomp("/")
+      if @uri
+        @full_uri = "#{connection.settings.base_uri.chomp("/")}/#{@uri}/#{ext_uri&.gsub("//","/")}".chomp("/")
+      else
+        @full_uri = "#{connection.settings.base_uri.chomp("/")}/#{ext_uri&.gsub("//","/")}".chomp("/")
+      end
     end
 
     def mapper

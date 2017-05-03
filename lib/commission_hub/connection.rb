@@ -7,11 +7,11 @@ module CommissionHub
     debug_output $stdout
 
     class << self
-      
-      def def_endpoint(name, uri, options={})
-        
+
+      def def_endpoint(name, uri=nil, options={})
+
         namespace   = "#{self.to_s.deconstantize}::Endpoints"
-        
+
         klass = if options[:class]
           "#{namespace}::#{options[:class].to_s.camelcase.demodulize}"
         else
@@ -48,7 +48,6 @@ module CommissionHub
         METHODS
 
       end
-
 
       def endpoints(name=nil)
         name ? @endpoints[name] : @endpoints
