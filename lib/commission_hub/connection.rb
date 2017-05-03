@@ -4,6 +4,7 @@ module CommissionHub
     attr_reader :settings
 
     include HTTParty
+    debug_output $stdout
 
     class << self
       
@@ -28,7 +29,7 @@ module CommissionHub
               endpoint = self.class.endpoints(__method__.to_sym)
               endpoint.connection = self
               endpoint.mapper = mapper
-              endpoint.uri(extended_uri)
+              endpoint.extend_uri(extended_uri)
 
               response = endpoint.call(request_params)
               payload = endpoint.mapper ? endpoint.mapper.call(response.body) : response.body
